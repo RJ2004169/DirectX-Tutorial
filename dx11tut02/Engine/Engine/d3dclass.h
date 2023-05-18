@@ -21,10 +21,6 @@
 #include <d3dcommon.h>
 #include <d3d11.h>
 #include <d3dx10math.h>
-#include <iostream>
-#include <string>
-#include <fstream>
-#include <stdio.h>
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -39,7 +35,7 @@ public:
 
 	bool Initialize(int, int, bool, HWND, bool, float, float);
 	void Shutdown();
-
+	
 	void BeginScene(float, float, float, float);
 	void EndScene();
 
@@ -67,8 +63,6 @@ private:
 	D3DXMATRIX m_projectionMatrix;
 	D3DXMATRIX m_worldMatrix;
 	D3DXMATRIX m_orthoMatrix;
-
-	std::ofstream* fw;
 };
 
 #endif
