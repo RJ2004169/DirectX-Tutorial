@@ -10,7 +10,9 @@
 ///////////////////////
 #include "d3dclass.h"
 #include "cameraclass.h"
-#include "modelclass.h"
+#include "ArenaClass.h"
+#include "PaddleClass.h"
+#include "BallClass.h"
 #include "colorshaderclass.h"
 
 
@@ -36,14 +38,18 @@ public:
 	bool Initialize(int, int, HWND);
 	void Shutdown();
 	bool Frame();
+	PaddleClass* GetPaddle(int);
 
 private:
 	bool Render();
 
+
 private:
 	D3DClass* m_D3D;
 	CameraClass* m_Camera;
-	ModelClass* m_Model;
+	ArenaClass* m_Arena;
+	PaddleClass* m_LeftPaddle, * m_RightPaddle;
+	BallClass* m_Ball;
 	ColorShaderClass* m_ColorShader;
 };
 

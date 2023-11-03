@@ -138,6 +138,46 @@ bool SystemClass::Frame()
 		return false;
 	}
 
+	// Input Controls for left paddle
+	if (m_Input->IsKeyDown(0x57))
+	{
+		m_Graphics->GetPaddle(0)->Update(0.04f);
+	}
+	else
+	{
+		m_Graphics->GetPaddle(0)->Update(0.0f);
+	}
+
+	if (m_Input->IsKeyDown(0x53))
+	{
+		m_Graphics->GetPaddle(0)->Update(-0.04f);
+	}
+	else
+	{
+		m_Graphics->GetPaddle(0)->Update(0.0f);
+	}
+
+	// Input controls for right paddle
+	if (m_Input->IsKeyDown(VK_UP))
+	{
+		m_Graphics->GetPaddle(1)->Update(0.04f);
+	}
+	else
+	{
+		m_Graphics->GetPaddle(1)->Update(0.0f);
+	}
+	
+	if (m_Input->IsKeyDown(VK_DOWN))
+	{
+		m_Graphics->GetPaddle(1)->Update(-0.04f);
+	}
+	else
+	{
+		m_Graphics->GetPaddle(1)->Update(0.0f);
+	}
+
+
+
 	// Do the frame processing for the graphics object.
 	result = m_Graphics->Frame();
 	if(!result)
