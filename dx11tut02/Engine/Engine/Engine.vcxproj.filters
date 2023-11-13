@@ -47,18 +47,6 @@
     <ClCompile Include="GameManagerClass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="fontclass.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="fontshaderclass.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="textclass.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="textureclass.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inputclass.h">
@@ -100,27 +88,9 @@
     <ClInclude Include="GameManagerClass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="fontclass.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="fontshaderclass.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="textclass.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="textureclass.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="myfileb.spritefont">
-      <Filter>Header Files</Filter>
-    </None>
-    <None Include="font.ps">
-      <Filter>Header Files</Filter>
-    </None>
-    <None Include="font.vs">
       <Filter>Header Files</Filter>
     </None>
   </ItemGroup>
