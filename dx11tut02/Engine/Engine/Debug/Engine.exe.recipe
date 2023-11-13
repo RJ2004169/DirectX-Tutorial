@@ -5,7 +5,11 @@
       <FullPath>C:\Game Dev\Github Projects\DirectX Tutorial\dx11tut02\Engine\Debug\Engine.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
-  <ContentFiles />
+  <ContentFiles>
+    <ContentFile>
+      <FullPath>C:\Game Dev\Github Projects\DirectX Tutorial\dx11tut02\Engine\Engine\myfileb.spritefont</FullPath>
+    </ContentFile>
+  </ContentFiles>
   <SatelliteDlls />
   <NonRecipeFileRefs />
 </Project>

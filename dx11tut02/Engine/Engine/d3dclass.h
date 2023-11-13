@@ -22,7 +22,6 @@
 #include <d3d11.h>
 #include <d3dx10math.h>
 #include <memory>
-#include <SpriteFont.h>
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -66,7 +65,7 @@ private:
 	D3DXMATRIX m_worldMatrix;
 	D3DXMATRIX m_orthoMatrix;
 
-	std::unique_ptr<DirectX::SpriteFont> m_font;
+	//std::unique_ptr<DirectX::SpriteFont> m_font;
 };
 
 #endif

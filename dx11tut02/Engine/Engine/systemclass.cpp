@@ -131,49 +131,73 @@ bool SystemClass::Frame()
 {
 	bool result;
 
-
-	// Check if the user pressed escape and wants to exit the application.
-	if(m_Input->IsKeyDown(VK_ESCAPE))
+	// from start state/start screen, press enter to go to serve state
+	if (m_Graphics->GetGameManager()->GetState() == States::Start)
 	{
-		return false;
+		if (m_Input->IsKeyDown(VK_RETURN))
+			m_Graphics->GetGameManager()->ChangeState(States::Serve);
 	}
 
-	// Input Controls for left paddle
-	if (m_Input->IsKeyDown(0x57))
+	//from serve state, press space to start service and move to play state
+	if (m_Graphics->GetGameManager()->GetState() == States::Serve)
 	{
-		m_Graphics->GetPaddle(0)->Update(0.04f);
-	}
-	else
-	{
-		m_Graphics->GetPaddle(0)->Update(0.0f);
+		if (m_Input->IsKeyDown(VK_SPACE))
+			m_Graphics->GetGameManager()->ChangeState(States::Play);
 	}
 
-	if (m_Input->IsKeyDown(0x53))
+	//from done/game over state, press enter to restart the game
+	if (m_Graphics->GetGameManager()->GetState() == States::Done)
 	{
-		m_Graphics->GetPaddle(0)->Update(-0.04f);
-	}
-	else
-	{
-		m_Graphics->GetPaddle(0)->Update(0.0f);
+		if (m_Input->IsKeyDown(VK_RETURN))
+			m_Graphics->GetGameManager()->ChangeState(States::Serve);
 	}
 
-	// Input controls for right paddle
-	if (m_Input->IsKeyDown(VK_UP))
+	//Check controls only if game is in play state
+	if (m_Graphics->GetGameManager()->GetState() == States::Play) 
 	{
-		m_Graphics->GetPaddle(1)->Update(0.04f);
-	}
-	else
-	{
-		m_Graphics->GetPaddle(1)->Update(0.0f);
-	}
+		// Check if the user pressed escape and wants to exit the application.
+		if(m_Input->IsKeyDown(VK_ESCAPE))
+		{
+			return false;
+		}
+
+		// Input Controls for left paddle
+		if (m_Input->IsKeyDown(0x57))
+		{
+			m_Graphics->GetPaddle(0)->Update(0.04f);
+		}
+		else
+		{
+			m_Graphics->GetPaddle(0)->Update(0.0f);
+		}
+
+		if (m_Input->IsKeyDown(0x53))
+		{
+			m_Graphics->GetPaddle(0)->Update(-0.04f);
+		}
+		else
+		{
+			m_Graphics->GetPaddle(0)->Update(0.0f);
+		}
+
+		// Input controls for right paddle
+		if (m_Input->IsKeyDown(VK_UP))
+		{
+			m_Graphics->GetPaddle(1)->Update(0.04f);
+		}
+		else
+		{
+			m_Graphics->GetPaddle(1)->Update(0.0f);
+		}
 	
-	if (m_Input->IsKeyDown(VK_DOWN))
-	{
-		m_Graphics->GetPaddle(1)->Update(-0.04f);
-	}
-	else
-	{
-		m_Graphics->GetPaddle(1)->Update(0.0f);
+		if (m_Input->IsKeyDown(VK_DOWN))
+		{
+			m_Graphics->GetPaddle(1)->Update(-0.04f);
+		}
+		else
+		{
+			m_Graphics->GetPaddle(1)->Update(0.0f);
+		}
 	}
 
 

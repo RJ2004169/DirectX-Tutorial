@@ -13,6 +13,7 @@ GraphicsClass::GraphicsClass()
 	m_LeftPaddle = 0;
 	m_RightPaddle = 0;
 	m_Ball = 0;
+	m_GameManager = 0;
 }
 
 
@@ -111,6 +112,12 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 		MessageBox(hwnd, L"Could not intitialize the ball.", L"Error", MB_OK);
 	}
 
+	m_GameManager = new GameManagerClass();
+	if (!m_GameManager)
+	{
+		return false;
+	}
+
 	// Create the color shader object.
 	m_ColorShader = new ColorShaderClass;
 	if(!m_ColorShader)
@@ -170,6 +177,12 @@ void GraphicsClass::Shutdown()
 		m_Ball = 0;
 	}
 
+	if (m_GameManager)
+	{
+		delete m_GameManager;
+		m_GameManager = 0;
+	}
+
 	// Release the camera object.
 	if(m_Camera)
 	{
@@ -193,11 +206,12 @@ bool GraphicsClass::Frame()
 {
 	bool result;
 
-
-	m_Ball->CollisionCheck(m_LeftPaddle);
-	m_Ball->CollisionCheck(m_RightPaddle);
-	m_Ball->Update();
-
+	if (m_GameManager->GetState() == States::Play)
+	{
+		m_Ball->CollisionCheck(m_LeftPaddle);
+		m_Ball->CollisionCheck(m_RightPaddle);
+		m_Ball->Update();
+	}
 	// Render the graphics scene.
 	result = Render();
 	if(!result)
@@ -216,6 +230,11 @@ PaddleClass* GraphicsClass::GetPaddle(int index)
 	}
 	else
 		return m_RightPaddle;
+}
+
+GameManagerClass* GraphicsClass::GetGameManager()
+{
+	return m_GameManager;
 }
 
 

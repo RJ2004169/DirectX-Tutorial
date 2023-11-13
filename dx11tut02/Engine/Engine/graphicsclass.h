@@ -13,6 +13,7 @@
 #include "ArenaClass.h"
 #include "PaddleClass.h"
 #include "BallClass.h"
+#include "GameManagerClass.h"
 #include "colorshaderclass.h"
 
 
@@ -39,6 +40,7 @@ public:
 	void Shutdown();
 	bool Frame();
 	PaddleClass* GetPaddle(int);
+	GameManagerClass* GetGameManager();
 
 private:
 	bool Render();
@@ -50,6 +52,7 @@ private:
 	ArenaClass* m_Arena;
 	PaddleClass* m_LeftPaddle, * m_RightPaddle;
 	BallClass* m_Ball;
+	GameManagerClass* m_GameManager;
 	ColorShaderClass* m_ColorShader;
 };
 
