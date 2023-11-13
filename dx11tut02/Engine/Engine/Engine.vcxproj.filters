@@ -76,5 +76,16 @@
     <ClInclude Include="BallClass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SpriteFont.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteBatch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="myfileb.spritefont">
+      <Filter>Header Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
