@@ -2,8 +2,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Filename: PaddleClass.h
 ////////////////////////////////////////////////////////////////////////////////
-#ifndef _PADDLECLASS_H_
-#define _PADDLECLASS_H_
+#ifndef _LEFTPADDLE_H
+#define _LEFTPADDLE_H
 
 
 //////////////
@@ -14,9 +14,9 @@
 
 
 ////////////////////////////////////////////////////////////////////////////////
-// Class name: PaddleClass
+// Class name: LeftPaddle
 ////////////////////////////////////////////////////////////////////////////////
-class PaddleClass
+class LeftPaddle
 {
 private:
 	struct VertexType
@@ -26,9 +26,9 @@ private:
 	};
 
 public:
-	PaddleClass();
-	PaddleClass(const PaddleClass&);
-	~PaddleClass();
+	LeftPaddle();
+	LeftPaddle(const LeftPaddle&);
+	~LeftPaddle();
 
 	bool Initialize(ID3D11Device*);
 	void Shutdown();
@@ -38,16 +38,17 @@ public:
 
 	void Update(float);
 	float GetDy();
+	int GetLeftRightIndex();
 
 private:
 	bool InitializeBuffers(ID3D11Device*);
 	void ShutdownBuffers();
 	void RenderBuffers(ID3D11DeviceContext*);
-	
+
 
 private:
 	ID3D11Buffer* m_vertexBuffer, * m_indexBuffer;
-	int m_vertexCount, m_indexCount;
+	int m_vertexCount, m_indexCount, m_LeftRightIndex;
 	float m_yPosition;
 };
 

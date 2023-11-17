@@ -1,27 +1,28 @@
-//////////////////////////////////////////////////////////////////////
-// This class is used to attach the arena borders with its vertex and index //
-//////////////////////////////////////////////////////////////////////
-#include "ArenaClass.h"
+////////////////////////////////////////////////////////////////////////
+// This class is used to attach each paddle with its vertex and index //
+////////////////////////////////////////////////////////////////////////
+#include "LeftPaddle.h"
 
 
-ArenaClass::ArenaClass()
+LeftPaddle::LeftPaddle()
 {
 	m_vertexBuffer = 0;
 	m_indexBuffer = 0;
+	m_yPosition = 0.0f;
 }
 
 
-ArenaClass::ArenaClass(const ArenaClass& other)
+LeftPaddle::LeftPaddle(const LeftPaddle& other)
 {
 }
 
 
-ArenaClass::~ArenaClass()
+LeftPaddle::~LeftPaddle()
 {
 }
 
 
-bool ArenaClass::Initialize(ID3D11Device* device)
+bool LeftPaddle::Initialize(ID3D11Device* device)
 {
 	bool result;
 
@@ -37,7 +38,7 @@ bool ArenaClass::Initialize(ID3D11Device* device)
 }
 
 
-void ArenaClass::Shutdown()
+void LeftPaddle::Shutdown()
 {
 	// Shutdown the vertex and index buffers.
 	ShutdownBuffers();
@@ -46,7 +47,7 @@ void ArenaClass::Shutdown()
 }
 
 
-void ArenaClass::Render(ID3D11DeviceContext* deviceContext)
+void LeftPaddle::Render(ID3D11DeviceContext* deviceContext)
 {
 	// Put the vertex and index buffers on the graphics pipeline to prepare them for drawing.
 	RenderBuffers(deviceContext);
@@ -55,13 +56,13 @@ void ArenaClass::Render(ID3D11DeviceContext* deviceContext)
 }
 
 
-int ArenaClass::GetIndexCount()
+int LeftPaddle::GetIndexCount()
 {
 	return m_indexCount;
 }
 
 
-bool ArenaClass::InitializeBuffers(ID3D11Device* device)
+bool LeftPaddle::InitializeBuffers(ID3D11Device* device)
 {
 	VertexType* vertices;
 	unsigned long* indices;
@@ -71,10 +72,10 @@ bool ArenaClass::InitializeBuffers(ID3D11Device* device)
 
 
 	// Set the number of vertices in the vertex array.
-	m_vertexCount = 6;
+	m_vertexCount = 4;
 
 	// Set the number of indices in the index array.
-	m_indexCount = 10;
+	m_indexCount = 6;
 
 	// Create the vertex array.
 	vertices = new VertexType[m_vertexCount];
@@ -91,38 +92,25 @@ bool ArenaClass::InitializeBuffers(ID3D11Device* device)
 	}
 
 	// Load the vertex array with data.
-	
-	vertices[0].position = D3DXVECTOR3(-950.0f, 524.0f, 0.0f);  // Top left.
+	vertices[0].position = D3DXVECTOR3(-7.2f, 0.7f, 0.0f);  // Top left.
 	vertices[0].color = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 
-	vertices[1].position = D3DXVECTOR3(-950.0f, -524.0f, 0.0f);  // Bottom left.
+	vertices[1].position = D3DXVECTOR3(-7.2f, -0.7f, 0.0f);  // Bottom left.
 	vertices[1].color = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 
-	vertices[2].position = D3DXVECTOR3(950.0f, -524.0f, 0.0f);  // Bottom right.
+	vertices[2].position = D3DXVECTOR3(-7.0f, -0.7f, 0.0f);  // Bottom right.
 	vertices[2].color = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 
-	vertices[3].position = D3DXVECTOR3(950.0f, 524.0f, 0.0f); // Top right
+	vertices[3].position = D3DXVECTOR3(-7.0f, 0.7f, 0.0f); // Top right
 	vertices[3].color = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
-
-	vertices[4].position = D3DXVECTOR3(0.0f, 524.0f, 0.0f); // Middle top
-	vertices[4].color = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
-
-	vertices[5].position = D3DXVECTOR3(0.0f, -524.0f, 0.0f); // Middle bottom
-	vertices[5].color = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
-
-
 	// Load the index array with data.
-	
+
 	indices[0] = 0;
-	indices[1] = 1;
+	indices[1] = 2;
 	indices[2] = 1;
-	indices[3] = 2;
-	indices[4] = 2;
-	indices[5] = 3;
-	indices[6] = 3;
-	indices[7] = 0;
-	indices[8] = 4;
-	indices[9] = 5;
+	indices[3] = 0;
+	indices[4] = 3;
+	indices[5] = 2;
 
 	// Set up the description of the static vertex buffer.
 	vertexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
@@ -175,7 +163,7 @@ bool ArenaClass::InitializeBuffers(ID3D11Device* device)
 }
 
 
-void ArenaClass::ShutdownBuffers()
+void LeftPaddle::ShutdownBuffers()
 {
 	// Release the index buffer.
 	if (m_indexBuffer)
@@ -195,7 +183,7 @@ void ArenaClass::ShutdownBuffers()
 }
 
 
-void ArenaClass::RenderBuffers(ID3D11DeviceContext* deviceContext)
+void LeftPaddle::RenderBuffers(ID3D11DeviceContext* deviceContext)
 {
 	unsigned int stride;
 	unsigned int offset;
@@ -212,7 +200,29 @@ void ArenaClass::RenderBuffers(ID3D11DeviceContext* deviceContext)
 	deviceContext->IASetIndexBuffer(m_indexBuffer, DXGI_FORMAT_R32_UINT, 0);
 
 	// Set the type of primitive that should be rendered from this vertex buffer, in this case triangles.
-	deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
+	deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	return;
+}
+
+void LeftPaddle::Update(float dy)
+{
+	if (dy < 0.0f)
+	{
+		m_yPosition = max(m_yPosition + dy, -3.2f);
+	}
+	else
+	{
+		m_yPosition = min(m_yPosition + dy, 3.2f);
+	}
+}
+
+float LeftPaddle::GetDy()
+{
+	return m_yPosition;
+}
+
+int LeftPaddle::GetLeftRightIndex()
+{
+	return m_LeftRightIndex;
 }

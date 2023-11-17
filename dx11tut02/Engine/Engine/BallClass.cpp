@@ -77,16 +77,20 @@ float BallClass::GetY()
 
 void BallClass::CollisionCheck(PaddleClass* paddle)
 {
-	if (!paddle->GetLeftRightIndex())
-	{
 		if (m_xPosition <= -6.9f && m_yPosition >= paddle->GetDy() - 0.7f && m_yPosition <= paddle->GetDy() + 0.7f)
 			m_dx *= -1;
-	}
-	else
-	{
 		if (m_xPosition >= 6.9f && m_yPosition >= paddle->GetDy() - 0.7f && m_yPosition <= paddle->GetDy() + 0.7f)
 			m_dx *= -1;
-	}
+	
+}
+
+void BallClass::CollisionCheck(LeftPaddle* paddle)
+{
+	if (m_xPosition <= -6.9f && m_yPosition >= paddle->GetDy() - 0.7f && m_yPosition <= paddle->GetDy() + 0.7f)
+		m_dx *= -1;
+	if (m_xPosition >= 6.9f && m_yPosition >= paddle->GetDy() - 0.7f && m_yPosition <= paddle->GetDy() + 0.7f)
+		m_dx *= -1;
+
 }
 
 float BallClass::GetX()
@@ -134,16 +138,28 @@ bool BallClass::InitializeBuffers(ID3D11Device* device)
 	}
 
 	// Load the vertex array with data.
-	vertices[0].position = D3DXVECTOR3(-0.1f, 0.1f, 0.0f);  // Top left.
+	//vertices[0].position = D3DXVECTOR3(-0.1f, 0.1f, 0.0f);  // Top left.
+	//vertices[0].color = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
+
+	//vertices[1].position = D3DXVECTOR3(-0.1f, -0.1f, 0.0f);  // Bottom left.
+	//vertices[1].color = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
+
+	//vertices[2].position = D3DXVECTOR3(0.1f, -0.1f, 0.0f);  // Bottom right.
+	//vertices[2].color = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
+
+	//vertices[3].position = D3DXVECTOR3(0.1f, 0.1f, 0.0f); // Top right
+	//vertices[3].color = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
+
+	vertices[0].position = D3DXVECTOR3(-7.2f, 0.7f, 0.0f);  // Top left.
 	vertices[0].color = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 
-	vertices[1].position = D3DXVECTOR3(-0.1f, -0.1f, 0.0f);  // Bottom left.
+	vertices[1].position = D3DXVECTOR3(-7.2f, -0.7f, 0.0f);  // Bottom left.
 	vertices[1].color = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 
-	vertices[2].position = D3DXVECTOR3(0.1f, -0.1f, 0.0f);  // Bottom right.
+	vertices[2].position = D3DXVECTOR3(-7.0f, -0.7f, 0.0f);  // Bottom right.
 	vertices[2].color = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 
-	vertices[3].position = D3DXVECTOR3(0.1f, 0.1f, 0.0f); // Top right
+	vertices[3].position = D3DXVECTOR3(-7.0f, 0.7f, 0.0f); // Top right
 	vertices[3].color = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 
 	// Load the index array with data.

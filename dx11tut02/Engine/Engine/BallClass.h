@@ -12,6 +12,7 @@
 #include <d3d11.h>
 #include <d3dx10math.h>
 #include "PaddleClass.h"
+#include <LeftPaddle.h>
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -42,6 +43,8 @@ public:
 	float GetY();
 
 	void CollisionCheck(PaddleClass*);
+
+	void CollisionCheck(LeftPaddle* paddle);
 
 	void InvertDx();
 	void InvertDy();
