@@ -1,6 +1,6 @@
-////////////////////////////////////////////////////////////////////////////////
-// Filename: main.cpp
-////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////
+// This file is where the execution starts //
+/////////////////////////////////////////////
 #include "systemclass.h"
 
 
@@ -8,14 +8,18 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR pScmdline,
 {
 	SystemClass* System;
 	bool result;
-
-
+	
+	
 	// Create the system object.
 	System = new SystemClass;
+	if(!System)
+	{
+		return 0;
+	}
 
 	// Initialize and run the system object.
 	result = System->Initialize();
-	if (result)
+	if(result)
 	{
 		System->Run();
 	}

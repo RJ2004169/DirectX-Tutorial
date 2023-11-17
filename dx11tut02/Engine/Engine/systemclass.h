@@ -21,7 +21,7 @@
 // MY CLASS INCLUDES //
 ///////////////////////
 #include "inputclass.h"
-#include "applicationclass.h"
+#include "graphicsclass.h"
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -51,7 +51,7 @@ private:
 	HWND m_hwnd;
 
 	InputClass* m_Input;
-	ApplicationClass* m_Application;
+	GraphicsClass* m_Graphics;
 };
 
 

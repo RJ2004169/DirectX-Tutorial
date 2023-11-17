@@ -26,7 +26,7 @@ private:
 	};
 
 public:
-	PaddleClass();
+	PaddleClass(int index);
 	PaddleClass(const PaddleClass&);
 	~PaddleClass();
 
@@ -38,6 +38,7 @@ public:
 
 	void Update(float);
 	float GetDy();
+	int GetLeftRightIndex();
 
 private:
 	bool InitializeBuffers(ID3D11Device*);
@@ -47,7 +48,7 @@ private:
 
 private:
 	ID3D11Buffer* m_vertexBuffer, * m_indexBuffer;
-	int m_vertexCount, m_indexCount;
+	int m_vertexCount, m_indexCount, m_LeftRightIndex;
 	float m_yPosition;
 };
 

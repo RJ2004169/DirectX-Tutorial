@@ -8,8 +8,7 @@
 //////////////
 // INCLUDES //
 //////////////
-#include <directxmath.h>
-using namespace DirectX;
+#include <d3dx10math.h>
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -25,16 +24,16 @@ public:
 	void SetPosition(float, float, float);
 	void SetRotation(float, float, float);
 
-	XMFLOAT3 GetPosition();
-	XMFLOAT3 GetRotation();
+	D3DXVECTOR3 GetPosition();
+	D3DXVECTOR3 GetRotation();
 
 	void Render();
-	void GetViewMatrix(XMMATRIX&);
+	void GetViewMatrix(D3DXMATRIX&);
 
 private:
 	float m_positionX, m_positionY, m_positionZ;
 	float m_rotationX, m_rotationY, m_rotationZ;
-	XMMATRIX m_viewMatrix;
+	D3DXMATRIX m_viewMatrix;
 };
 
 #endif

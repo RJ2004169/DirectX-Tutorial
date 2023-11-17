@@ -4,8 +4,9 @@
 #include "PaddleClass.h"
 
 
-PaddleClass::PaddleClass()
+PaddleClass::PaddleClass(int index)
 {
+	m_LeftRightIndex = index;
 	m_vertexBuffer = 0;
 	m_indexBuffer = 0;
 	m_yPosition = 0.0f;
@@ -92,7 +93,22 @@ bool PaddleClass::InitializeBuffers(ID3D11Device* device)
 	}
 
 	// Load the vertex array with data.
-	
+	if (m_LeftRightIndex == 0)
+	{
+		vertices[0].position = D3DXVECTOR3(-7.2f, 0.7f, 0.0f);  // Top left.
+		vertices[0].color = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
+
+		vertices[1].position = D3DXVECTOR3(-7.2f, -0.7f, 0.0f);  // Bottom left.
+		vertices[1].color = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
+
+		vertices[2].position = D3DXVECTOR3(-7.0f, -0.7f, 0.0f);  // Bottom right.
+		vertices[2].color = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
+
+		vertices[3].position = D3DXVECTOR3(-7.0f, 0.7f, 0.0f); // Top right
+		vertices[3].color = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
+	}
+	else
+	{
 		vertices[0].position = D3DXVECTOR3(7.0f, 0.7f, 0.0f);  // Top left.
 		vertices[0].color = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 
@@ -104,6 +120,7 @@ bool PaddleClass::InitializeBuffers(ID3D11Device* device)
 
 		vertices[3].position = D3DXVECTOR3(7.2f, 0.7f, 0.0f); // Top right
 		vertices[3].color = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
+	}
 	// Load the index array with data.
 
 	indices[0] = 0;
@@ -221,4 +238,9 @@ void PaddleClass::Update(float dy)
 float PaddleClass::GetDy()
 {
 	return m_yPosition;
+}
+
+int PaddleClass::GetLeftRightIndex()
+{
+	return m_LeftRightIndex;
 }

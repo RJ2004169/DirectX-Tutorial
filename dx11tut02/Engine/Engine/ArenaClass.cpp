@@ -92,22 +92,22 @@ bool ArenaClass::InitializeBuffers(ID3D11Device* device)
 
 	// Load the vertex array with data.
 	
-	vertices[0].position = D3DXVECTOR3(-950.0f, 524.0f, 0.0f);  // Top left.
+	vertices[0].position = D3DXVECTOR3(-7.3f, 4.0f, 0.0f);  // Top left.
 	vertices[0].color = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 
-	vertices[1].position = D3DXVECTOR3(-950.0f, -524.0f, 0.0f);  // Bottom left.
+	vertices[1].position = D3DXVECTOR3(-7.3f, -4.0f, 0.0f);  // Bottom left.
 	vertices[1].color = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 
-	vertices[2].position = D3DXVECTOR3(950.0f, -524.0f, 0.0f);  // Bottom right.
+	vertices[2].position = D3DXVECTOR3(7.3f, -4.0f, 0.0f);  // Bottom right.
 	vertices[2].color = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 
-	vertices[3].position = D3DXVECTOR3(950.0f, 524.0f, 0.0f); // Top right
+	vertices[3].position = D3DXVECTOR3(7.3f, 4.0f, 0.0f); // Top right
 	vertices[3].color = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 
-	vertices[4].position = D3DXVECTOR3(0.0f, 524.0f, 0.0f); // Middle top
+	vertices[4].position = D3DXVECTOR3(0.0f, 4.0f, 0.0f); // Middle top
 	vertices[4].color = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 
-	vertices[5].position = D3DXVECTOR3(0.0f, -524.0f, 0.0f); // Middle bottom
+	vertices[5].position = D3DXVECTOR3(0.0f, -4.0f, 0.0f); // Middle bottom
 	vertices[5].color = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 
 
