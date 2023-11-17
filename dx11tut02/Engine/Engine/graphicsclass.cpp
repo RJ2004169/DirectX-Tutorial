@@ -14,6 +14,8 @@ GraphicsClass::GraphicsClass()
 	m_RightPaddle = 0;
 	m_Ball = 0;
 	m_GameManager = 0;
+
+	m_Text = 0;
 }
 
 
@@ -30,6 +32,8 @@ GraphicsClass::~GraphicsClass()
 bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 {
 	bool result;
+
+	D3DXMATRIX baseViewMatrix;
 
 
 	// Create the Direct3D object.
@@ -56,6 +60,10 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 
 	// Set the initial position of the camera.
 	m_Camera->SetPosition(0.0f, 0.0f, -10.0f);
+
+	// for text
+	m_Camera->Render();
+	m_Camera->GetViewMatrix(baseViewMatrix);
 	
 	// Create the arena object.
 	m_Arena = new ArenaClass;
@@ -133,12 +141,36 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 		return false;
 	}
 
+
+	// Create the text object.
+	m_Text = new TextClass;
+	if (!m_Text)
+	{
+		return false;
+	}
+	// Initialize the text object.
+	result = m_Text->Initialize(m_D3D->GetDevice(), m_D3D->GetDeviceContext(), hwnd, screenWidth, screenHeight, baseViewMatrix);
+	if (!result)
+	{
+		MessageBox(hwnd, L"Could not initialize the text object.", L"Error", MB_OK);
+		return false;
+	}
+
 	return true;
 }
 
 
 void GraphicsClass::Shutdown()
 {
+
+	// Release the text object.
+	if (m_Text)
+	{
+		m_Text->Shutdown();
+		delete m_Text;
+		m_Text = 0;
+	}
+
 	// Release the color shader object.
 	if(m_ColorShader)
 	{
@@ -206,12 +238,15 @@ bool GraphicsClass::Frame()
 {
 	bool result;
 
-	if (m_GameManager->GetState() == States::Play)
-	{
-		m_Ball->CollisionCheck(m_LeftPaddle);
-		m_Ball->CollisionCheck(m_RightPaddle);
-		m_Ball->Update();
-	}
+	// Set the position of the camera.
+	m_Camera->SetPosition(0.0f, 0.0f, -10.0f);
+
+	//if (m_GameManager->GetState() == States::Play)
+	//{
+	//	m_Ball->CollisionCheck(m_LeftPaddle);
+	//	m_Ball->CollisionCheck(m_RightPaddle);
+	//	m_Ball->Update();
+	//}
 	// Render the graphics scene.
 	result = Render();
 	if(!result)
@@ -240,7 +275,7 @@ GameManagerClass* GraphicsClass::GetGameManager()
 
 bool GraphicsClass::Render()
 {
-	D3DXMATRIX worldMatrix, viewMatrix, projectionMatrix, translation;
+	D3DXMATRIX worldMatrix, viewMatrix, projectionMatrix, orthoMatrix, translation;
 	bool result;
 
 
@@ -250,64 +285,85 @@ bool GraphicsClass::Render()
 	// Generate the view matrix based on the camera's position.
 	m_Camera->Render();
 
-	// Get the world, view, and projection matrices from the camera and d3d objects.
+	//// Get the world, view, and projection matrices from the camera and d3d objects.
+	//m_Camera->GetViewMatrix(viewMatrix);
+	//m_D3D->GetWorldMatrix(worldMatrix);
+	//m_D3D->GetProjectionMatrix(projectionMatrix);
+
+	//// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
+	//m_Arena->Render(m_D3D->GetDeviceContext());
+
+	//// Render the model using the color shader.
+	//result = m_ColorShader->Render(m_D3D->GetDeviceContext(), m_Arena->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
+	//if(!result)
+	//{
+	//	return false;
+	//}
+
+	//D3DXMatrixTranslation(&translation, 0.0f, m_LeftPaddle->GetDy(), 0.0f);
+
+	//worldMatrix *= translation;
+
+	//m_LeftPaddle->Render(m_D3D->GetDeviceContext());
+
+	//result = m_ColorShader->Render(m_D3D->GetDeviceContext(), m_LeftPaddle->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
+	//if (!result)
+	//{
+	//	return false;
+	//}
+
+	//m_Camera->GetViewMatrix(viewMatrix);
+	//m_D3D->GetWorldMatrix(worldMatrix);
+	//m_D3D->GetProjectionMatrix(projectionMatrix);
+
+	//D3DXMatrixTranslation(&translation, 0.0f, m_RightPaddle->GetDy(), 0.0f);
+
+	//worldMatrix *= translation;
+
+	//m_RightPaddle->Render(m_D3D->GetDeviceContext());
+
+	//result = m_ColorShader->Render(m_D3D->GetDeviceContext(), m_RightPaddle->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
+	//if (!result)
+	//{
+	//	return false;
+	//}
+
+	//m_Camera->GetViewMatrix(viewMatrix);
+	//m_D3D->GetWorldMatrix(worldMatrix);
+	//m_D3D->GetProjectionMatrix(projectionMatrix);
+
+	//D3DXMatrixTranslation(&translation, m_Ball->GetX(), m_Ball->GetY(), 0.0f);
+
+	//worldMatrix *= translation;
+
+	//m_Ball->Render(m_D3D->GetDeviceContext());
+
+	//result = m_ColorShader->Render(m_D3D->GetDeviceContext(), m_Ball->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
+	//if (!result)
+	//{
+	//	return false;
+	//}
+
+	// Get the view, projection, and world matrices from the camera and D3D objects.
 	m_Camera->GetViewMatrix(viewMatrix);
 	m_D3D->GetWorldMatrix(worldMatrix);
 	m_D3D->GetProjectionMatrix(projectionMatrix);
-
-	// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
-	m_Arena->Render(m_D3D->GetDeviceContext());
-
-	// Render the model using the color shader.
-	result = m_ColorShader->Render(m_D3D->GetDeviceContext(), m_Arena->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
-	if(!result)
-	{
-		return false;
-	}
-
-	D3DXMatrixTranslation(&translation, 0.0f, m_LeftPaddle->GetDy(), 0.0f);
-
-	worldMatrix *= translation;
-
-	m_LeftPaddle->Render(m_D3D->GetDeviceContext());
-
-	result = m_ColorShader->Render(m_D3D->GetDeviceContext(), m_LeftPaddle->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
+	m_D3D->GetOrthoMatrix(orthoMatrix);
+	// Turn off the Z buffer to begin all 2D rendering.
+	m_D3D->TurnZBufferOff();
+	// Turn on the alpha blending before rendering the text.
+	m_D3D->TurnOnAlphaBlending();
+	// Render the text strings.
+	result = m_Text->Render(m_D3D->GetDeviceContext(), worldMatrix, orthoMatrix);
 	if (!result)
 	{
 		return false;
 	}
+	// Turn off alpha blending after rendering the text.
+	m_D3D->TurnOffAlphaBlending();
+	// Turn the Z buffer back on now that all 2D rendering has completed.
+	m_D3D->TurnZBufferOn();
 
-	m_Camera->GetViewMatrix(viewMatrix);
-	m_D3D->GetWorldMatrix(worldMatrix);
-	m_D3D->GetProjectionMatrix(projectionMatrix);
-
-	D3DXMatrixTranslation(&translation, 0.0f, m_RightPaddle->GetDy(), 0.0f);
-
-	worldMatrix *= translation;
-
-	m_RightPaddle->Render(m_D3D->GetDeviceContext());
-
-	result = m_ColorShader->Render(m_D3D->GetDeviceContext(), m_RightPaddle->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
-	if (!result)
-	{
-		return false;
-	}
-
-	m_Camera->GetViewMatrix(viewMatrix);
-	m_D3D->GetWorldMatrix(worldMatrix);
-	m_D3D->GetProjectionMatrix(projectionMatrix);
-
-	D3DXMatrixTranslation(&translation, m_Ball->GetX(), m_Ball->GetY(), 0.0f);
-
-	worldMatrix *= translation;
-
-	m_Ball->Render(m_D3D->GetDeviceContext());
-
-	result = m_ColorShader->Render(m_D3D->GetDeviceContext(), m_Ball->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
-	if (!result)
-	{
-		return false;
-	}
 
 	// Present the rendered scene to the screen.
 	m_D3D->EndScene();

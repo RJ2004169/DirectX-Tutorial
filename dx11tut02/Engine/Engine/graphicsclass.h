@@ -15,6 +15,7 @@
 #include "BallClass.h"
 #include "GameManagerClass.h"
 #include "colorshaderclass.h"
+#include "textclass.h"
 
 
 /////////////
@@ -54,6 +55,8 @@ private:
 	BallClass* m_Ball;
 	GameManagerClass* m_GameManager;
 	ColorShaderClass* m_ColorShader;
+
+	TextClass* m_Text;
 };
 
 #endif
